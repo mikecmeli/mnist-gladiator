@@ -1,0 +1,9 @@
+name: mnist-naive-bayes
+channels:
+- conda-forge
+- defaults
+# Start with Python and include everything you need
+dependencies:
+- python=3.8
+- pip
+- numpy
