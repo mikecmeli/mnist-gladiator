@@ -4,7 +4,6 @@ import numpy as np
 
 def naive_bayes(train_x,train_y,test_x,test_y):
     epsilon = 0.1
-    num_test = 6000
 
     nb_matrix = np.zeros((10,train_x.shape[1],train_x.shape[2]))
     counts = np.zeros(10)
@@ -19,7 +18,7 @@ def naive_bayes(train_x,train_y,test_x,test_y):
     guesses = []
 
     # need to vectorize
-    for i in range(num_test): # need to change this
+    for i in range(len(test_y)): # need to change this
         on_pixels = np.nonzero(test_x[i] == 1)
         off_pixels = np.nonzero(test_x[i] == 0)
         probs = np.zeros((10,test_x.shape[1],test_x.shape[2]))
@@ -31,10 +30,6 @@ def naive_bayes(train_x,train_y,test_x,test_y):
 
     guesses = np.asarray(guesses)
 
-
-    print(guesses)
-
-
-    equal_indices = test_y[0:num_test] == guesses
+    equal_indices = test_y == guesses
     equal_amount = equal_indices.sum()
-    return(equal_amount/num_test, guesses)
+    return(equal_amount/len(test_y), guesses)
