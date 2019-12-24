@@ -7,8 +7,9 @@ import numpy as np
 epsilon = 0.01
 pixel_threshold = 127
 
-train_images = mnist.train_images()
-train_labels = mnist.train_labels()
+train_images = mnist.train_images()[0:1]
+print(train_images.shape)
+train_labels = mnist.train_labels()[0:1]
 
 test_images = mnist.test_images()
 test_labels = mnist.test_labels()
@@ -25,6 +26,7 @@ nb_matrix = np.zeros((10,train_images.shape[1],train_images.shape[2]))
 counts = np.zeros(10)
 for i in range(10):
     indices = np.nonzero(train_labels == i)
+    print(indices)
     counts[i] = len(indices)
     sum = np.sum(train_images[indices,:,:], axis=(0,1))
     nb_matrix[i,:,:] = sum/counts[i]
@@ -32,15 +34,14 @@ for i in range(10):
 x_list = []
 
 # need to vectorize
-for i in range(1000): # need to change this
+for i in range(1): # need to change this
     on_pixels = train_images_threshold[i] == 1
     off_pixels = train_images_threshold[i] == 0
     probs = np.zeros((10,train_images.shape[1],train_images.shape[2]))
     for j in range(10): # need to change this
         probs[j,on_pixels] = nb_matrix[j,on_pixels] + epsilon
         probs[j,off_pixels] = 1 - nb_matrix[j,off_pixels] + epsilon
-    
-    x_list.append(np.argmax(np.prod(probs, axis=(0,1)))) # product here will probably underflow
+    x_list.append(np.argmax(np.prod(probs, axis=(1,2)))) # product here will probably underflow
 
 x_list = np.asarray(x_list)
 
