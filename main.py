@@ -4,7 +4,7 @@ import scipy.misc
 import random
 import numpy as np
 
-epsilon = 0.0
+epsilon = 0.1
 pixel_threshold = 127
 num_test = 1
 
@@ -44,8 +44,8 @@ for i in range(num_test): # need to change this
     print(len(off_pixels[0]))
     probs = np.zeros((10,train_images.shape[1],train_images.shape[2]))
     for j in range(10): # need to change this
-        # probs[j,on_pixels] = nb_matrix[j,on_pixels] + epsilon
-        probs[j,off_pixels] = 1 - nb_matrix[j,off_pixels] + epsilon
+        probs[j,on_pixels[0],on_pixels[1]] = nb_matrix[j,on_pixels[0],on_pixels[1]] + epsilon
+        probs[j,off_pixels[0],off_pixels[1]] = 1 - nb_matrix[j,off_pixels[0],off_pixels[1]] + epsilon
 
     print(probs[0])
     x_list.append(np.argmax(np.prod(probs, axis=(1,2)))) # product here will probably underflow
