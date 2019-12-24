@@ -1,5 +1,4 @@
 import mnist
-from PIL import Image
 from naive_bayes import naive_bayes
 import numpy as np
 
@@ -21,10 +20,8 @@ on_pixels = test_images > pixel_threshold
 test_images_threshold = np.zeros_like(test_images)
 test_images_threshold[on_pixels] = 1
 
-correct_percent, guesses = naive_bayes(train_images_threshold, train_labels, test_images_threshold, test_labels)
+correct_percent, guesses = naive_bayes(
+    train_images_threshold, train_labels, test_images_threshold, test_labels
+)
 
 print(correct_percent)
-
-# im = Image.fromarray(np.reshape(train_images_threshold[0:100,:,:] * 255,(28*100,28)))
-# im.save('out.jpeg', "JPEG")
-# print(np.max(train_images[0,:,:]), np.min(train_images[0,:,:]))
