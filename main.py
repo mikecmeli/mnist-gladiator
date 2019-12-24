@@ -6,7 +6,7 @@ import numpy as np
 
 epsilon = 0.1
 pixel_threshold = 127
-num_test = 1
+num_test = 200
 
 train_images = mnist.train_images()[0:num_test]
 train_labels = mnist.train_labels()[0:num_test]
