@@ -28,8 +28,10 @@ for i in range(10):
     indices = np.nonzero(train_labels == i)
     print(indices)
     counts[i] = len(indices)
-    sum = np.sum(train_images[indices,:,:], axis=(0,1))
+    sum = np.sum(train_images_threshold[indices,:,:], axis=(0,1))
     nb_matrix[i,:,:] = sum/counts[i]
+
+print(nb_matrix[5])
 
 x_list = []
 
@@ -41,6 +43,7 @@ for i in range(1): # need to change this
     for j in range(10): # need to change this
         probs[j,on_pixels] = nb_matrix[j,on_pixels] + epsilon
         probs[j,off_pixels] = 1 - nb_matrix[j,off_pixels] + epsilon
+    print(probs[5])
     x_list.append(np.argmax(np.prod(probs, axis=(1,2)))) # product here will probably underflow
 
 x_list = np.asarray(x_list)
