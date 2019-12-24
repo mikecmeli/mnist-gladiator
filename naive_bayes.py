@@ -17,12 +17,12 @@ def naive_bayes(train_x, train_y, test_x, test_y, **kwargs):
 
     guesses = []
 
-    # need to vectorize
-    for i in range(len(test_y)):  # need to change this
+    # could perform faster if vectorized
+    for i in range(len(test_y)):
         on_pixels = np.nonzero(test_x[i] == 1)
         off_pixels = np.nonzero(test_x[i] == 0)
         probs = np.zeros((10, test_x.shape[1], test_x.shape[2]))
-        for j in range(10):  # need to change this
+        for j in range(10):
             probs[j, on_pixels[0], on_pixels[1]] = (
                 nb_matrix[j, on_pixels[0], on_pixels[1]] + epsilon
             )
@@ -32,7 +32,7 @@ def naive_bayes(train_x, train_y, test_x, test_y, **kwargs):
 
         guesses.append(
             np.argmax(np.prod(probs, axis=(1, 2)))
-        )  # product here will probably underflow
+        )  # could potentially underflow
 
     guesses = np.asarray(guesses)
 
