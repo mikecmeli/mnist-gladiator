@@ -1,9 +1,8 @@
-import scipy.misc
 import random
 import numpy as np
 
-def naive_bayes(train_x,train_y,test_x,test_y):
-    epsilon = 0.1
+def naive_bayes(train_x,train_y,test_x,test_y,**kwargs):
+    epsilon = 0 if 'epsilon' not in kwargs else kwargs['epsilon']
 
     nb_matrix = np.zeros((10,train_x.shape[1],train_x.shape[2]))
     counts = np.zeros(10)
