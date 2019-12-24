@@ -19,7 +19,7 @@ def naive_bayes(train_x, train_y, test_x, test_y, **kwargs):
             counts[i] = 1
         nb_matrix[i, :, :] = sum / counts[i]
 
-    guesses = []
+    pred_y = []
 
     # could perform faster if vectorized
     for i in range(len(test_y)):
@@ -35,10 +35,11 @@ def naive_bayes(train_x, train_y, test_x, test_y, **kwargs):
             )
 
         # use log and sum instead of product to prevent any potential underflow
-        guesses.append(np.argmax(np.sum(np.log(probs), axis=(1, 2))))
+        # assume all classes are equally likely, no need to multiply by P(Class)
+        pred_y.append(np.argmax(np.sum(np.log(probs), axis=(1, 2))))
 
-    guesses = np.asarray(guesses)
+    pred_y = np.asarray(pred_y)
 
-    equal_indices = test_y == guesses
+    equal_indices = test_y == pred_y
     equal_amount = equal_indices.sum()
-    return (equal_amount / len(test_y), guesses)
+    return (equal_amount / len(test_y), pred_y)
