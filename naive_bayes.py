@@ -3,6 +3,10 @@ import numpy as np
 
 
 def naive_bayes(train_x, train_y, test_x, test_y, **kwargs):
+
+    # epsilon helps us in two ways
+    #   it prevents product of all probs from coming out to 0
+    #   since we are using a sum of log instead of products, it prevents log(0)
     epsilon = 0.001 if "epsilon" not in kwargs else kwargs["epsilon"]
 
     nb_matrix = np.zeros((10, train_x.shape[1], train_x.shape[2]))
@@ -30,9 +34,8 @@ def naive_bayes(train_x, train_y, test_x, test_y, **kwargs):
                 1 - nb_matrix[j, off_pixels[0], off_pixels[1]] + epsilon
             )
 
-        guesses.append(
-            np.argmax(np.prod(probs, axis=(1, 2)))
-        )  # could potentially underflow
+        # use log and sum instead of product to prevent any potential underflow
+        guesses.append(np.argmax(np.sum(np.log(probs), axis=(1, 2))))
 
     guesses = np.asarray(guesses)
 
